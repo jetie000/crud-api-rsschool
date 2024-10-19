@@ -1,17 +1,17 @@
 import { errorMessages, formatErrorMessage } from './errorMessages';
 import { validate } from 'uuid';
 
-export function getErrorMessageUserDto(obj: Object) {
+export function getErrorMessageUserDto(obj: object) {
   const messages = [];
-  if ('id' in obj && 'username') {
-    if (typeof obj.id !== 'string') {
+  if ('username' in obj) {
+    if (typeof obj.username !== 'string') {
       messages.push(errorMessages.USER_USERNAME_IS_INVALID);
     }
   } else {
     messages.push(errorMessages.USER_USERNAME_IS_REQUIRED);
   }
 
-  if ('age' in obj && 'hobbies') {
+  if ('age' in obj) {
     if (typeof obj.age !== 'number') {
       messages.push(errorMessages.USER_AGE_IS_INVALID);
     }
@@ -22,7 +22,7 @@ export function getErrorMessageUserDto(obj: Object) {
   if ('hobbies' in obj) {
     if (
       !Array.isArray(obj.hobbies) ||
-      !obj.hobbies.some((hobby) => typeof hobby === 'string')
+      obj.hobbies.some((hobby) => typeof hobby !== 'string')
     ) {
       messages.push(errorMessages.USER_HOBBIES_IS_INVALID);
     }
@@ -30,7 +30,7 @@ export function getErrorMessageUserDto(obj: Object) {
     messages.push(errorMessages.USER_HOBBIES_IS_REQUIRED);
   }
 
-  if (messages.length > 1) {
+  if (messages.length > 0) {
     return formatErrorMessage(messages.join(', '));
   }
 }

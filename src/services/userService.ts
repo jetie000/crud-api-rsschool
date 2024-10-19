@@ -1,15 +1,18 @@
-import { UserDto } from '@/dto/userDto';
-import { ApiError } from '@/exceptions/ApiError';
-import { UserRepository } from '@/repositories/userRepository';
-import { getErrorMessageUserDto, getErrorMessageUserId } from '@/helpers/checkUserType';
-import { errorMessages } from '@/helpers/errorMessages';
+import { UserDto } from '../dto/userDto';
+import { UserRepository } from '../repositories/userRepository';
+import {
+  getErrorMessageUserDto,
+  getErrorMessageUserId,
+} from '../helpers/checkUserType';
+import { errorMessages } from '../helpers/errorMessages';
+import { ApiError } from '../exceptions/apiError';
 
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
-  addUser(user: UserDto) {
+  addUser(user: object) {
     this.checkUserDto(user);
-    this.userRepository.addUser(user);
+    return this.userRepository.addUser(user as UserDto);
   }
 
   getUsers() {
@@ -25,13 +28,18 @@ export class UserService {
     return user;
   }
 
-  updateUser(userId: string, user: UserDto) {
+  updateUser(userId: string, user: object) {
     const errorMessageId = getErrorMessageUserId(userId);
     const errorMessageUser = getErrorMessageUserDto(user);
     if (errorMessageId || errorMessageUser) {
-      throw ApiError.BadRequest([errorMessageId, errorMessageUser].filter(Boolean).join(', '));
+      throw ApiError.BadRequest(
+        [errorMessageId, errorMessageUser].filter(Boolean).join(', ')
+      );
     }
-    const userUpdated = this.userRepository.updateUser({ id: userId, ...user });
+    const userUpdated = this.userRepository.updateUser({
+      id: userId,
+      ...(user as UserDto),
+    });
     if (!userUpdated) {
       throw ApiError.NotFoundError(errorMessages.USER_NOT_FOUND);
     }
@@ -53,7 +61,7 @@ export class UserService {
     }
   }
 
-  checkUserDto(user: UserDto) {
+  checkUserDto(user: object) {
     const errorMessage = getErrorMessageUserDto(user);
     if (errorMessage) {
       throw ApiError.BadRequest(errorMessage);

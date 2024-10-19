@@ -1,5 +1,5 @@
-import { UserDto } from '@/dto/userDto';
-import { User } from '@/models/userModel';
+import { UserDto } from '../dto/userDto';
+import { User } from '../models/userModel';
 import { v4 } from 'uuid';
 
 export class UserRepository {

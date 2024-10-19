@@ -1,4 +1,4 @@
-import { LargeNumberLike } from 'crypto';
+import { formatErrorMessage } from '../helpers/errorMessages';
 
 export class ApiError extends Error {
   status: number;
@@ -9,10 +9,10 @@ export class ApiError extends Error {
   }
 
   static NotFoundError(message: string) {
-    return new ApiError(404, message);
+    return new ApiError(404, formatErrorMessage(message));
   }
 
   static BadRequest(message: string) {
-    return new ApiError(400, message);
+    return new ApiError(400, formatErrorMessage(message));
   }
 }
