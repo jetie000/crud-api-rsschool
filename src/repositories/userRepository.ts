@@ -1,11 +1,11 @@
-import { UserCreateDto } from '@/dto/userCreateDto';
+import { UserDto } from '@/dto/userDto';
 import { User } from '@/models/userModel';
 import { v4 } from 'uuid';
 
 export class UserRepository {
   users: User[] = [];
 
-  addUser(user: UserCreateDto) {
+  addUser(user: UserDto) {
     const userWithId = { ...user, id: v4() };
     this.users.push(userWithId);
     return userWithId;
@@ -31,6 +31,7 @@ export class UserRepository {
     const index = this.users.findIndex((u) => u.id === id);
     if (index !== -1) {
       this.users.splice(index, 1);
+      return true;
     }
   }
 }
