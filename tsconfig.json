@@ -5,13 +5,10 @@
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "strict": true,
-    "skipLibCheck": true,
-    "paths": {
-      "@/*": ["src/*"],
-    },
+    "skipLibCheck": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "exclude": ["node_modules"]
 }
