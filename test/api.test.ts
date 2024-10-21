@@ -46,7 +46,7 @@ describe('User Endpoints', () => {
   test('GET /api/users', async () => {
     const response = await request(defaultUrl).get('/users');
     expect(response.status).toBe(200);
-    expect(response.body.length).toBe(1);
+    expect(response.body.length).toBe(6);
     await request(defaultUrl)
       .post('/users')
       .send({
@@ -56,7 +56,7 @@ describe('User Endpoints', () => {
       });
     const responseSecond = await request(defaultUrl).get('/users');
     expect(responseSecond.status).toBe(200);
-    expect(responseSecond.body.length).toBe(2);
+    expect(responseSecond.body.length).toBe(7);
   });
 
   test('GET /api/users/:id not found', async () => {
