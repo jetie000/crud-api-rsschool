@@ -6,13 +6,14 @@ import {
 } from '../helpers/checkUserType';
 import { errorMessages } from '../helpers/errorMessages';
 import { ApiError } from '../exceptions/apiError';
+import { User } from 'models/userModel';
 
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
   addUser(user: object) {
     this.checkUserDto(user);
-    return this.userRepository.addUser(user as UserDto);
+    return this.userRepository.addUser(user as User);
   }
 
   getUsers() {
@@ -37,8 +38,8 @@ export class UserService {
       );
     }
     const userUpdated = this.userRepository.updateUser({
-      id: userId,
       ...(user as UserDto),
+      id: userId,
     });
     if (!userUpdated) {
       throw ApiError.NotFoundError(errorMessages.USER_NOT_FOUND);

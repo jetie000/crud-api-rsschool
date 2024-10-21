@@ -2,6 +2,32 @@ import { IncomingMessage, ServerResponse } from 'http';
 import url from 'url';
 import { userController } from './controllers/userController';
 import { errorMessages, formatErrorMessage } from './helpers/errorMessages';
+import { User } from 'models/userModel';
+
+export const handleChangeDataMessage = ({
+  type,
+  data,
+}: {
+  type: string;
+  data: User;
+}) => {
+  switch (type) {
+    case 'USER_ADDED':
+      userController.userService.addUser(data);
+      break;
+    case 'USER_UPDATED':
+      userController.userService.updateUser(data.id, data);
+      break;
+    case 'USER_DELETED':
+      userController.userService.deleteUser(data.id);
+      break;
+    default:
+      console.log(formatErrorMessage(errorMessages.USER_NOT_FOUND));
+      break;
+  }
+};
+
+process.on('message', handleChangeDataMessage);
 
 export const processRequest = async (
   req: IncomingMessage,

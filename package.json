@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start:dev": "nodemon -x ts-node ./src/index.ts",
-    "start:prod": "npx tsc && node ./dist/index.js",
+    "start:prod": "npx tsc && node ./dist/src/index.js",
+    "start:multi": "npx tsc && node ./dist/src/load-balancer.js",
     "lint": "npx eslint ./src",
     "fix": "npx eslint ./src --fix",
     "format": "npx prettier ./src --write",
