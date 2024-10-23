@@ -4,6 +4,8 @@ Clone repository:
 
 ```git clone https://github.com/jetie000/crud-api-rsschool.git```
 
+Create .env file in the root of the project and add PORT variable
+
 Install dependencies:
 
 ```npm install```
